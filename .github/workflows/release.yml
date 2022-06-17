@@ -90,7 +90,7 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
           build-args: | 
-            VERSION=${{.Version}}
+            VERSION={{version}}
       - name: Prepare cache for next build
         run: |
           rm -rf /tmp/.buildx-cache
