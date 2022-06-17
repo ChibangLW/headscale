@@ -1,4 +1,5 @@
 # Builder image
+ARG VERSION
 FROM docker.io/golang:1.18.0-bullseye AS build
 ENV GOPATH /go
 WORKDIR /go/src/headscale
@@ -8,7 +9,7 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go install -a ./cmd/headscale
+RUN CGO_ENABLED=0 GOOS=linux go install -ldflags="-s -w -X 'github.com/juanfont/headscale/cmd/headscale/cli.Version=$VERSION'" -a ./cmd/headscale
 RUN strip /go/bin/headscale
 RUN test -e /go/bin/headscale
 
